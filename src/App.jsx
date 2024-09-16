@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Header from "./component/Header";
 import Categories from "./component/Categories";
 import axios from "axios";
 import Product from "./component/Product";
+import { WishlistContext } from "./Context/WishlistContext";
 
 function App() {
   const [categories, setCategories] = useState([]);
@@ -16,23 +17,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
-  const [wishlist, setWishlist] = useState([]);
 
-  useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlist(storedWishlist);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
-
-  const addToWishlist = (item) => {
-    const existingItem = wishlist.find((product) => product.id === item.id);
-    if (!existingItem) {
-      setWishlist([...wishlist, item]);
-    }
-  };
+  const {addToWishlist}=useContext(WishlistContext)
 
   const allCat = () => {
     axios
@@ -43,12 +29,9 @@ function App() {
 
   const allProd = (reset = false) => {
     setLoading(false);
-    let api;
-    if (proCat == undefined) {
-      api = `https://dummyjson.com/products?limit=${productLimit}`;
-    } else {
-      api = ` ${proCat}?limit=${productLimit}`;
-    }
+    let api = proCat
+      ? `${proCat}?limit=${productLimit}`
+      : `https://dummyjson.com/products?limit=${productLimit}`;
 
     axios
       .get(api)
@@ -69,14 +52,12 @@ function App() {
 
   const searchPro = () => {
     if (search) {
-      setIsSearchActive(true); 
+      setIsSearchActive(true);
       axios
         .get(
           `https://dummyjson.com/products/search?q=${search}&limit=${searchLimit}`
         )
-        .then((ress) => {
-          setSearchResult(ress.data.products);
-        })
+        .then((res) => setSearchResult(res.data.products))
         .catch((error) => console.log(error));
     } else {
       setIsSearchActive(false);
@@ -100,7 +81,6 @@ function App() {
       setProductLimit((prevLimit) => prevLimit + 10);
     }
   };
-  console.log(setProCat);
 
   return (
     <>
@@ -117,7 +97,7 @@ function App() {
               searchResult={searchResult}
               proApi={products}
               loading={loading}
-              addToWishlist={addToWishlist} // Pass down the wishlist function
+              addToWishlist={addToWishlist} 
             />
           </div>
           {(isSearchActive

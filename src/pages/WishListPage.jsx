@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../component/Header";
+import { WishlistContext } from "../Context/WishlistContext";
+import { CartContext } from "../Context/CartContext";
 
 const WishListPage = () => {
-  const [wishlist, setWishlist] = useState([]);
   const [menuOpenStates, setMenuOpenStates] = useState({});
+  const { addToCart }=useContext(CartContext)
 
-  useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlist(storedWishlist);
-  }, []);
+  // useEffect(() => {
+  //   const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  //   setWishlist(storedWishlist);
+  // }, []);
 
-  const removeFromWishlist = (id) => {
-    const updatedWishlist = wishlist.filter((item) => item.id !== id);
-    setWishlist(updatedWishlist);
-    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-  };
+  // const removeFromWishlist = (id) => {
+  //   const updatedWishlist = wishlist.filter((item) => item.id !== id);
+  //   setWishlist(updatedWishlist);
+  //   localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  // };
 
   const toggleMenu = (id) => {
     setMenuOpenStates((prevState) => ({
@@ -23,19 +25,22 @@ const WishListPage = () => {
     }));
   };
 
-  const handleAddToCart = (product) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  // const handleAddToCart = (product) => {
+  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const productInCart = cart.find((item) => item.id === product.id);
+  //   const productInCart = cart.find((item) => item.id === product.id);
 
-    if (!productInCart) {
-      const updatedCart = [...cart, product];
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      alert("Product added to cart!");
-    } else {
-      alert("Product is already in the cart.");
-    }
-  };
+  //   if (!productInCart) {
+  //     const updatedCart = [...cart, product];
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     alert("Product added to cart!");
+  //   } else {
+  //     alert("Product is already in the cart.");
+  //   }
+  // };
+
+
+  const { wishlist, removeFromWishlist }=useContext(WishlistContext)
 
   return (
     <>
@@ -188,7 +193,7 @@ const WishListPage = () => {
                         </div>
                         <div className="w-full">
                           <button
-                            onClick={() => handleAddToCart(v)}
+                            onClick={() => addToCart(v)}
                             className="focus:outline-none focus:ring-gray-800 focus:ring-offset-2 focus:ring-2 text-white w-full tracking-tight py-4 text-lg leading-4 hover:bg-black bg-gray-800 border border-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
                           >
                             Add to cart
@@ -196,7 +201,7 @@ const WishListPage = () => {
                         </div>
                       </div>
                     </div>
-                  )}
+            )}
                 </div>
               );
             })}

@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetail from "./component/ProductDetail.jsx";
 import WishListPage from "./pages/WishListPage.jsx";
 import AddToCart from "./pages/AddToCart.jsx";
+import { WishlistProvider } from "./Context/WishlistContext.jsx";
+import { CartProvider } from "./Context/CartContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +29,11 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
+  <StrictMode>
+    <WishlistProvider>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+    </WishlistProvider>
+  </StrictMode>
 );

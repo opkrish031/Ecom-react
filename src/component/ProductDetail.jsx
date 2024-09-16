@@ -1,13 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from './Header';
-
+import { WishlistContext } from '../Context/WishlistContext'; 
 
 const ProductDetail = () => {
   const urlPath = useParams().id;
   const [singlePro, setSinglePro] = useState(null);
   const [apiLoad, setApiLoad] = useState(false);
+  const { wishlist, addToWishlist } = useContext(WishlistContext); 
   const [isAdded, setIsAdded] = useState(false); 
 
   useEffect(() => {
@@ -17,27 +18,17 @@ const ProductDetail = () => {
         setSinglePro(res.data);
         setApiLoad(true);
 
-        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         const productInWishlist = wishlist.find((item) => item.id === res.data.id);
         if (productInWishlist) {
           setIsAdded(true); 
         }
       })
       .catch((error) => console.log(error));
-  }, [urlPath]);
+  }, [urlPath, wishlist]);
 
   const handleAddToWishlist = () => {
-    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-
-    const productInWishlist = wishlist.find((item) => item.id === singlePro.id);
-
-    if (!productInWishlist) {
-      const updatedWishlist = [...wishlist, singlePro];
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); 
-      setIsAdded(true); 
-    } else {
-      alert('Product already in wishlist');
-    }
+    addToWishlist(singlePro);
+    setIsAdded(true); 
   };
 
   return (
