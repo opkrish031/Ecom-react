@@ -39,8 +39,8 @@ function App() {
         if (reset) {
           setProducts(res.data.products);
         } else {
-          setProducts((prevProducts) => [
-            ...prevProducts,
+          setProducts((oldProducts) => [
+            ...oldProducts,
             ...res.data.products,
           ]);
         }
