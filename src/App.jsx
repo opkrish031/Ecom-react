@@ -92,7 +92,7 @@ function App() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-center">All Products</h2>
-          <div className="mt-5 grid gap-3 md:grid-cols-4 grid-cols-1">
+          <div className="mt-5 grid gap-1 grid-cols-1">
             <Product
               searchResult={searchResult}
               proApi={products}

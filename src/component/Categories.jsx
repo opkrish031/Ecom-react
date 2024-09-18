@@ -5,7 +5,7 @@ const Categories = ({ catApi, setCat }) => {
 
   return (
     <>
-      <div className="mt-5 ">
+      <div className="mt-5 shadow-lg shadow-[#f2f2f2]-500/50">
         <div>
           <ul className="border border-black-200 rounded overflow-hidden shadow-md">
             <li

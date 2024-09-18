@@ -8,7 +8,7 @@ const Header = ({setSearch}) => {
   }
   return (
     <>
-      <header class="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-10 shadow-black">
+      <header class=" bg-white dark:bg-gray-900 shadow-md sticky top-0 z-10 shadow-white">
         <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <Link to={"/"} class="block text-teal-600 dark:text-teal-300" >
             <span class="sr-only">Home</span>
