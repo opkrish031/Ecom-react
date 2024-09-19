@@ -92,7 +92,7 @@ const ProductDetail = () => {
                     ${singlePro.price}
                   </span>
                   <span className="text-gray-500 line-through">
-                    ${singlePro.price + 50}
+                    ${(singlePro.price + 50).toFixed(2)}
                   </span>
                 </div>
 
@@ -132,9 +132,7 @@ const ProductDetail = () => {
                   >
                     {isAdded ? "Added to Wishlist" : "Add to Wishlist"}
                   </button>
-                  <button className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">
-                    Buy Now
-                  </button>
+                 
                 </div>
               </div>
             </div>

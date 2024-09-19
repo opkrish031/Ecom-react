@@ -32,7 +32,7 @@ const Product = ({ proApi, searchResult, loading, addToWishlist }) => {
           ? mapResult.map((v, i) => (
               <div
                 key={i}
-                className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+                className="max-w-sm border bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
               >
                 <Link to={`/product/${v.id}`}>
                   <img
